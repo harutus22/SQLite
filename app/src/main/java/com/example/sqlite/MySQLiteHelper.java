@@ -6,12 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "database";
-    public static final String TABLE_NAME = "IKEA";
-    public static final String ID = "ID";
-    public static final String NAME = "NAME";
-    public static final String SURNAME = "SURNAME";
-    public static final String MARKS = "MARKS";
+    public static final String DATABASE_NAME = "myDatabase";
+    public static final String TABLE_NAME = "ikea";
+    public static final String id = "id";
+    public static final String NAME = "name";
+    public static final String SURNAME = "surname";
+    public static final String MARK = "mark";
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -20,7 +20,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_NAME +
-                "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME TEXT, SURNAME TEXT, MARKS INTEGER)");
+               " (" + id + " INTEGER PRIMARY KEY autoincrement, " + NAME + " TEXT not null," +
+                SURNAME + " TEXT not null," + MARK + " INTEGER not null)");
     }
 
     @Override

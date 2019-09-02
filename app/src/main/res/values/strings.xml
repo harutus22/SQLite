@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SQLite</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="marks">Marks</string>
+    <string name="save">Save data</string>
+    <string name="show_data">Show data</string>
 </resources>
