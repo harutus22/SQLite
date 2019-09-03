@@ -1,41 +1,44 @@
 package com.example.sqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.sqlite.Database.DBManager;
+import com.example.sqlite.Dialog.MyRecyclerShowDialog;
+import com.example.sqlite.Dialog.MyUpdateDialog;
+import com.example.sqlite.Model.Student;
+import com.example.sqlite.RecyclerView.MyRecycleViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EditText editTextName, editTextSurname, editTextMarks;
+
     private List<Student> students = new ArrayList<>();
     private DBManager dbManager = new DBManager(this);
     private MyRecycleViewAdapter myRecycleViewAdapter;
-    private MyDialog dialog;
+    private MyRecyclerShowDialog dialog;
     private MyRecycleViewAdapter.OnItemClicked onItemClicked = new MyRecycleViewAdapter.OnItemClicked() {
         @Override
         public void onItemClick(int position) {
-
+            setDataToUpdate(position);
         }
     };
-
-    private EditText editTextName, editTextSurname, editTextMarks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewsById();
+        students.addAll(dbManager.getAllInfo());
+        myRecycleViewAdapter = new MyRecycleViewAdapter(students);
+        myRecycleViewAdapter.setOnItemClicked(onItemClicked);
     }
 
     private void findViewsById() {
@@ -58,15 +61,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showData(View view){
-        students.addAll(dbManager.getAllInfo());
-//        RecyclerView recyclerView = findViewsById(R.id.recyclerView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myRecycleViewAdapter = new MyRecycleViewAdapter(students);
-        myRecycleViewAdapter.setOnItemClicked(onItemClicked);
-        dialog = new MyDialog(this, myRecycleViewAdapter);
+        dialog = new MyRecyclerShowDialog(this, myRecycleViewAdapter);
         dialog.show();
+    }
 
-//        recyclerView.setAdapter(myRecycleViewAdapter);
+    private void setDataToUpdate(int position){
+        MyUpdateDialog myUpdateDialog = new MyUpdateDialog(this,
+                myRecycleViewAdapter, students.get(position), dbManager);
+        myUpdateDialog.show();
     }
 
     private boolean checkEditTextsIsEmpty(){

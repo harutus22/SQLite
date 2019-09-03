@@ -1,7 +1,9 @@
-package com.example.sqlite;
+package com.example.sqlite.RecyclerView;
 
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.sqlite.R;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

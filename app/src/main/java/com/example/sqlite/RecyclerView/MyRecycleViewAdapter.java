@@ -1,8 +1,11 @@
-package com.example.sqlite;
+package com.example.sqlite.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.sqlite.R;
+import com.example.sqlite.Model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +59,15 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
         return students.size();
     }
 
-    interface OnItemClicked{
+    public interface OnItemClicked{
         void onItemClick(int position);
     }
 
     public void setOnItemClicked(OnItemClicked onItemClicked) {
         this.onItemClicked = onItemClicked;
+    }
+
+    public List<Student> getStudents() {
+        return students;
     }
 }

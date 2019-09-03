@@ -1,4 +1,4 @@
-package com.example.sqlite;
+package com.example.sqlite.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.sqlite.Model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,22 @@ public class DBManager {
         } while ((cursor.moveToNext()));
         cursor.close();
         return students;
+    }
+
+    public void updateStudent(Student student){
+        SQLiteDatabase sqLiteDatabase = mySQLiteHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MySQLiteHelper.NAME, student.getName());
+        contentValues.put(MySQLiteHelper.SURNAME, student.getSurname());
+        contentValues.put(MySQLiteHelper.MARK, student.getMark());
+        String studentId = String.valueOf(student.getId() + 1);
+        long id = sqLiteDatabase.update(MySQLiteHelper.TABLE_NAME, contentValues, "id = ?",
+                new String[]{studentId});
+        if (id > 0) {
+            makeToast("Data saved");
+        } else {
+            makeToast("Data not saved");
+        }
     }
 
     private void makeToast(String text){

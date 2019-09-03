@@ -1,20 +1,22 @@
-package com.example.sqlite;
+package com.example.sqlite.Dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.example.sqlite.R;
+import com.example.sqlite.RecyclerView.MyRecycleViewAdapter;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyDialog extends Dialog {
+public class MyRecyclerShowDialog extends Dialog {
     private Context context;
     private MyRecycleViewAdapter adapter;
 
-    public MyDialog(@NonNull Context context, MyRecycleViewAdapter adapter) {
+    public MyRecyclerShowDialog(@NonNull Context context, MyRecycleViewAdapter adapter) {
         super(context);
         this.context = context;
         this.adapter = adapter;
