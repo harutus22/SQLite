@@ -20,10 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextSurname, editTextMarks;
 
-    private List<Student> students = new ArrayList<>();
     private DBManager dbManager = new DBManager(this);
     private MyRecycleViewAdapter myRecycleViewAdapter;
     private MyRecyclerShowDialog dialog;
+    private static int ids = 0;
     private MyRecycleViewAdapter.OnItemClicked onItemClicked = new MyRecycleViewAdapter.OnItemClicked() {
         @Override
         public void onItemClick(int position) {
@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewsById();
-        students.addAll(dbManager.getAllInfo());
-        myRecycleViewAdapter = new MyRecycleViewAdapter(students);
+        myRecycleViewAdapter = new MyRecycleViewAdapter(dbManager.getAllInfo());
+        ids = myRecycleViewAdapter.getStudents().get(myRecycleViewAdapter.getStudents().size() - 1).getId();
         myRecycleViewAdapter.setOnItemClicked(onItemClicked);
     }
 
@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
             String surname = editTextSurname.getText().toString();
             int mark = Integer.valueOf(editTextMarks.getText().toString());
             dbManager.createStudentInfo(name, surname, mark);
+            myRecycleViewAdapter.getStudents().add(new Student(++ids,
+                    name, surname, mark));
+            myRecycleViewAdapter.notifyDataSetChanged();
             emptyEditText();
         } else {
             Toast.makeText(getApplicationContext(), "All fields must be entered",
@@ -61,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showData(View view){
-        dialog = new MyRecyclerShowDialog(this, myRecycleViewAdapter);
+        dialog = new MyRecyclerShowDialog(this, myRecycleViewAdapter, dbManager);
         dialog.show();
     }
 
     private void setDataToUpdate(int position){
         MyUpdateDialog myUpdateDialog = new MyUpdateDialog(this,
-                myRecycleViewAdapter, students.get(position), dbManager);
+                myRecycleViewAdapter, myRecycleViewAdapter.getStudents().get(position), dbManager);
         myUpdateDialog.show();
     }
 

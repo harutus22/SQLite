@@ -13,6 +13,7 @@ public class MyRecycleViewHolder extends RecyclerView.ViewHolder {
     private TextView name;
     private TextView surname;
     private TextView mark;
+    private boolean isSelected = false;
 
     public MyRecycleViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -36,5 +37,13 @@ public class MyRecycleViewHolder extends RecyclerView.ViewHolder {
 
     public TextView getMark() {
         return mark;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

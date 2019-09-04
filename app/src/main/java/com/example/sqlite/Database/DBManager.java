@@ -77,6 +77,16 @@ public class DBManager {
         }
     }
 
+    public void deleteStudent(ArrayList<Student> students){
+        SQLiteDatabase sqLiteDatabase = mySQLiteHelper.getWritableDatabase();
+        for(int i = 0; i < students.size(); ++i){
+            sqLiteDatabase.delete(MySQLiteHelper.TABLE_NAME, "id = ?",
+                    new String[]{String.valueOf(students.get(i).getId())});
+        }
+
+        sqLiteDatabase.close();
+    }
+
     private void makeToast(String text){
         Toast.makeText(context,text, Toast.LENGTH_LONG).show();
     }

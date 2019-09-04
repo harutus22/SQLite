@@ -15,9 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHolder> {
     private List<Student> students = new ArrayList<>();
-    private OnItemClicked onItemClicked;
 
+    private OnItemClicked onItemClicked;
     private View.OnClickListener onClickListener;
+    private View.OnLongClickListener onLongClickListener;
+    private boolean isLongClicked = false;
+    private static int selectedItems = 0;
+
+    private OnCountStart onCountStart;
 
     public MyRecycleViewAdapter(List<Student> students){
         this.students.addAll(students);
@@ -28,18 +33,36 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
     public MyRecycleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_view,
                 parent, false);
-        MyRecycleViewHolder viewHolder = new MyRecycleViewHolder(view);
-        return viewHolder;
+        return new MyRecycleViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyRecycleViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyRecycleViewHolder holder, final int position) {
         onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onItemClicked != null){
-                    onItemClicked.onItemClick(position);
+                if(selectedItems == 0 && isLongClicked){
+                    isLongClicked = false;
                 }
+                if(!isLongClicked) {
+                    if (onItemClicked != null) {
+                        onItemClicked.onItemClick(position);
+                    }
+                } else {
+                    if (!holder.isSelected()) {
+                        setViewSelected(v, holder, position);
+                    } else {
+                        setViewUnselected(v, holder, position);
+                    }
+                }
+            }
+        };
+        onLongClickListener = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setViewSelected(v, holder, position);
+                isLongClicked = true;
+                return true;
             }
         };
         String id = "ID: " + students.get(position).getId();
@@ -48,6 +71,7 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
         String mark = "Mark: " + students.get(position).getMark();
 
         holder.itemView.setOnClickListener(onClickListener);
+        holder.itemView.setOnLongClickListener(onLongClickListener);
         holder.getId().setText(id);
         holder.getName().setText(name);
         holder.getSurname().setText(surname);
@@ -69,5 +93,31 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
 
     public List<Student> getStudents() {
         return students;
+    }
+
+    private void setViewSelected(View v, MyRecycleViewHolder holder, int position){
+        v.setBackgroundResource(R.color.recycleViewClicked);
+        holder.setSelected(true);
+        ++selectedItems;
+        onCountStart.startCount(selectedItems, true, students.get(position));
+    }
+
+    private void setViewUnselected(View v, MyRecycleViewHolder holder, int position){
+        v.setBackgroundResource(R.color.recycleViewNotClicked);
+        holder.setSelected(false);
+        --selectedItems;
+        onCountStart.startCount(selectedItems, false, students.get(position));
+    }
+
+    public interface OnCountStart{
+        void startCount(int count, boolean action, Student student);
+    }
+
+    public void setOnCountStart(OnCountStart onCountStart) {
+        this.onCountStart = onCountStart;
+    }
+
+    public void setLongClicked(boolean longClicked) {
+        isLongClicked = longClicked;
     }
 }
