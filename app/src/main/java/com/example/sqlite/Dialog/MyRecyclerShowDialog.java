@@ -14,7 +14,6 @@ import com.example.sqlite.R;
 import com.example.sqlite.RecyclerView.MyRecycleViewAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,6 +68,7 @@ public class MyRecyclerShowDialog extends Dialog {
             adapter.getStudents().remove(items.get(i));
         }
         adapter.notifyDataSetChanged();
+        MyRecycleViewAdapter.setSelectedItems(0);
         setDeleteView(0, true, null);
     }
 

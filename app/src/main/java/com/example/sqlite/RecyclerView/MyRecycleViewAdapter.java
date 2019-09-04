@@ -120,4 +120,8 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
     public void setLongClicked(boolean longClicked) {
         isLongClicked = longClicked;
     }
+
+    public static void setSelectedItems(int selectedItems) {
+        MyRecycleViewAdapter.selectedItems = selectedItems;
+    }
 }
