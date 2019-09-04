@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.sqlite.Database.DBManager;
-import com.example.sqlite.MainActivity;
 import com.example.sqlite.Model.Student;
 import com.example.sqlite.R;
 import com.example.sqlite.RecyclerView.MyRecycleViewAdapter;
