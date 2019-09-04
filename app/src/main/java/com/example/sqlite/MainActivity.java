@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         findViewsById();
         List<Student> students = new ArrayList<>();
         if(!dbManager.getAllInfo().isEmpty()) {
-            students = dbManager.getAllInfo();
+            students.addAll(dbManager.getStudents());
             ids = students.get(students.size() - 1).getId();
         }
         myRecycleViewAdapter = new MyRecycleViewAdapter(students);

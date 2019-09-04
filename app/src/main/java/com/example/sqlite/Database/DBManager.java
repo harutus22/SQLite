@@ -63,6 +63,10 @@ public class DBManager {
         return students;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
     public void updateStudent(Student student){
         SQLiteDatabase sqLiteDatabase = mySQLiteHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -91,7 +95,7 @@ public class DBManager {
 
     public void deleteAll(){
         SQLiteDatabase sqLiteDatabase = mySQLiteHelper.getWritableDatabase();
-        sqLiteDatabase.delete(MySQLiteHelper.TABLE_NAME, null, null);
+        sqLiteDatabase.execSQL("delete from "+ MySQLiteHelper.TABLE_NAME);
         sqLiteDatabase.close();
     }
 
