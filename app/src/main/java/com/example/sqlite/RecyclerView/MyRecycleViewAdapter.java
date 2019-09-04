@@ -17,8 +17,6 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
     private List<Student> students = new ArrayList<>();
 
     private OnItemClicked onItemClicked;
-    private View.OnClickListener onClickListener;
-    private View.OnLongClickListener onLongClickListener;
     private boolean isLongClicked = false;
     private static int selectedItems = 0;
 
@@ -38,13 +36,10 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final MyRecycleViewHolder holder, final int position) {
-        onClickListener = new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectedItems == 0 && isLongClicked){
-                    isLongClicked = false;
-                }
-                if(!isLongClicked) {
+                if (!isLongClicked) {
                     if (onItemClicked != null) {
                         onItemClicked.onItemClick(position);
                     }
@@ -55,9 +50,12 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
                         setViewUnselected(v, holder, position);
                     }
                 }
+                if (selectedItems == 0 && isLongClicked) {
+                    isLongClicked = false;
+                }
             }
         };
-        onLongClickListener = new View.OnLongClickListener() {
+        View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 setViewSelected(v, holder, position);
@@ -121,7 +119,13 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
         isLongClicked = longClicked;
     }
 
+    public boolean isLongClicked() {
+        return isLongClicked;
+    }
+
     public static void setSelectedItems(int selectedItems) {
         MyRecycleViewAdapter.selectedItems = selectedItems;
     }
+
+
 }

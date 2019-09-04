@@ -97,4 +97,16 @@ public class MyRecyclerShowDialog extends Dialog {
             }
         }
     }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        if(adapter.isLongClicked()){
+            adapter.setLongClicked(false);
+            MyRecycleViewAdapter.setSelectedItems(0);
+            if (!items.isEmpty()) {
+                items.clear();
+            }
+        }
+    }
 }
