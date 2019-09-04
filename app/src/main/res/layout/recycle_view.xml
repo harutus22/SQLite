@@ -6,7 +6,8 @@
     android:background="@drawable/selector_view_holder"
     app:cardCornerRadius="25dp"
     app:cardElevation="25dp"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:id="@+id/cardView">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"

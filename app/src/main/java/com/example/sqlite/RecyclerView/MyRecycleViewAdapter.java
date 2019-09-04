@@ -94,14 +94,16 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
     }
 
     private void setViewSelected(View v, MyRecycleViewHolder holder, int position){
-        v.setBackgroundResource(R.color.recycleViewClicked);
+        holder.getCardView().setCardBackgroundColor(v.getContext()
+                .getResources().getColor(R.color.recycleViewClicked));
         holder.setSelected(true);
         ++selectedItems;
         onCountStart.startCount(selectedItems, true, students.get(position));
     }
 
     private void setViewUnselected(View v, MyRecycleViewHolder holder, int position){
-        v.setBackgroundResource(R.color.recycleViewNotClicked);
+        holder.getCardView().setCardBackgroundColor(v.getContext()
+                .getResources().getColor(R.color.recycleViewNotClicked));
         holder.setSelected(false);
         --selectedItems;
         onCountStart.startCount(selectedItems, false, students.get(position));
