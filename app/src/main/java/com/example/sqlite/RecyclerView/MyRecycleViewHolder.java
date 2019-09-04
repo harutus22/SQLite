@@ -15,7 +15,6 @@ public class MyRecycleViewHolder extends RecyclerView.ViewHolder {
     private TextView surname;
     private TextView mark;
     private CardView cardView;
-    private boolean isSelected = false;
 
     public MyRecycleViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -44,13 +43,5 @@ public class MyRecycleViewHolder extends RecyclerView.ViewHolder {
 
     public CardView getCardView() {
         return cardView;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
     }
 }

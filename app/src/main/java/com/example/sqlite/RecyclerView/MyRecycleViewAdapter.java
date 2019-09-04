@@ -44,7 +44,7 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
                         onItemClicked.onItemClick(position);
                     }
                 } else {
-                    if (!holder.isSelected()) {
+                    if (!v.isSelected()) {
                         setViewSelected(v, holder, position);
                     } else {
                         setViewUnselected(v, holder, position);
@@ -96,7 +96,7 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
     private void setViewSelected(View v, MyRecycleViewHolder holder, int position){
         holder.getCardView().setCardBackgroundColor(v.getContext()
                 .getResources().getColor(R.color.recycleViewClicked));
-        holder.setSelected(true);
+        v.setSelected(true);
         ++selectedItems;
         onCountStart.startCount(selectedItems, true, students.get(position));
     }
@@ -104,7 +104,7 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
     private void setViewUnselected(View v, MyRecycleViewHolder holder, int position){
         holder.getCardView().setCardBackgroundColor(v.getContext()
                 .getResources().getColor(R.color.recycleViewNotClicked));
-        holder.setSelected(false);
+        v.setSelected(false);
         --selectedItems;
         onCountStart.startCount(selectedItems, false, students.get(position));
     }
@@ -128,6 +128,4 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewHold
     public static void setSelectedItems(int selectedItems) {
         MyRecycleViewAdapter.selectedItems = selectedItems;
     }
-
-
 }
