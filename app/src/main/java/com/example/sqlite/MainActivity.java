@@ -36,8 +36,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewsById();
-        myRecycleViewAdapter = new MyRecycleViewAdapter(dbManager.getAllInfo());
-        ids = myRecycleViewAdapter.getStudents().get(myRecycleViewAdapter.getStudents().size() - 1).getId();
+        List<Student> students = new ArrayList<>();
+        if(!dbManager.getAllInfo().isEmpty()) {
+            students.addAll(dbManager.getAllInfo());
+            ids = students.get(students.size() - 1).getId();
+        }
+        myRecycleViewAdapter = new MyRecycleViewAdapter(students);
         myRecycleViewAdapter.setOnItemClicked(onItemClicked);
     }
 
@@ -61,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "All fields must be entered",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void deleteAll(View view){
+        dbManager.deleteAll();
+        myRecycleViewAdapter.getStudents().clear();
+        myRecycleViewAdapter.notifyDataSetChanged();
+        MainActivity.ids = 0;
     }
 
     public void showData(View view){

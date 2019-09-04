@@ -47,17 +47,19 @@ public class DBManager {
         Cursor cursor = sqLiteDatabase.query(MySQLiteHelper.TABLE_NAME, null, null,
                 null, null, null, null);
         Log.d("Tag", String.valueOf(cursor.getCount()));
-        cursor.moveToFirst();
+        if(cursor.moveToFirst()) {
+            cursor.moveToFirst();
 
-        do {
-            int id = cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.id));
-            String name = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NAME));
-            String surname = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.SURNAME));
-            int mark = cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.MARK));
-            Student student = new Student(id, name, surname, mark);
-            students.add(student);
-        } while ((cursor.moveToNext()));
-        cursor.close();
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.id));
+                String name = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.NAME));
+                String surname = cursor.getString(cursor.getColumnIndex(MySQLiteHelper.SURNAME));
+                int mark = cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.MARK));
+                Student student = new Student(id, name, surname, mark);
+                students.add(student);
+            } while ((cursor.moveToNext()));
+            cursor.close();
+        }
         return students;
     }
 
@@ -84,6 +86,12 @@ public class DBManager {
                     new String[]{String.valueOf(students.get(i).getId())});
         }
 
+        sqLiteDatabase.close();
+    }
+
+    public void deleteAll(){
+        SQLiteDatabase sqLiteDatabase = mySQLiteHelper.getWritableDatabase();
+        sqLiteDatabase.delete(MySQLiteHelper.TABLE_NAME, null, null);
         sqLiteDatabase.close();
     }
 

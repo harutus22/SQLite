@@ -15,6 +15,7 @@ public class MyRecycleViewHolder extends RecyclerView.ViewHolder {
     private TextView surname;
     private TextView mark;
     private CardView cardView;
+    private boolean isSelected = false;
 
     public MyRecycleViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -23,6 +24,14 @@ public class MyRecycleViewHolder extends RecyclerView.ViewHolder {
         surname = itemView.findViewById(R.id.viewSurname);
         mark = itemView.findViewById(R.id.viewMark);
         cardView = itemView.findViewById(R.id.cardView);
+        if(isSelected){
+            cardView.setCardBackgroundColor(itemView.getContext()
+                    .getResources().getColor(R.color.recycleViewClicked));
+
+        } else {
+            cardView.setCardBackgroundColor(itemView.getContext()
+                    .getResources().getColor(R.color.recycleViewNotClicked));
+        }
     }
 
     public TextView getId() {
@@ -43,5 +52,13 @@ public class MyRecycleViewHolder extends RecyclerView.ViewHolder {
 
     public CardView getCardView() {
         return cardView;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 }
